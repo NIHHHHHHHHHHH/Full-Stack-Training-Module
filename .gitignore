@@ -5,3 +5,4 @@
 
 # Ignore environment variables
 server/.env
+cleint/.env

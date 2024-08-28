@@ -25,7 +25,8 @@ const VideoPlayer = ({ video, watchedTime, setWatchedTime, setIsVideoCompleted }
         });
 
         // Fetch progress and set the current time
-        fetch(`http://localhost:5000/api/progress/${userId}/${video._id}`)
+        const apiUrl = process.env.REACT_APP_API_URL 
+        fetch(`${apiUrl}/api/progress/${userId}/${video._id}`)
           .then(res => res.json())
           .then(data => {
             if (data && data.lastWatchedPosition) {
