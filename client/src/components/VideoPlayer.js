@@ -59,8 +59,8 @@ const VideoPlayer = ({ video, watchedTime, setWatchedTime, setIsVideoCompleted }
       videoPlayer.currentTime(watchedTime);
     } else {
       setWatchedTime(videoPlayer.currentTime());
-
-      fetch('http://localhost:5000/api/progress', {
+      const apiUrl = process.env.REACT_APP_API_URL 
+      fetch(`${apiUrl}/api/progress`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
