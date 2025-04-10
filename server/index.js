@@ -10,7 +10,10 @@ const connectDB = require('./config/db');
 const app = express();
 
 // Middleware setup
-app.use(cors());
+app.use(cors({
+  origin: ['https://frontend-62766463836.us-central1.run.app', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Root route
@@ -44,7 +47,7 @@ connectDB()
     console.log('Server continuing to run despite DB connection issues');
   });
 
-  
+
 // // Importing required modules
 // const express = require('express'); // Framework for building web applications
 // const cors = require('cors'); // Middleware to enable Cross-Origin Resource Sharing
