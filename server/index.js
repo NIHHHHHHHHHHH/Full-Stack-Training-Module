@@ -33,36 +33,10 @@ app.get('/', (req, res) => {
 
 
 // Setting up the server to listen on a specified port
-const PORT = process.env.PORT || 5000; // The port number is taken from the environment variables or defaults to 5000
+const PORT = process.env.PORT || 8080; // The port number is taken from the environment variables or defaults to 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Starting the server and logging the port number
 
 
 
 
-
-
-
-
-// const express = require('express');
-// const cors = require('cors');
-// const connectDb = require('./config/db');
-// const apiRoutes = require('./routes/api');
-
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-
-// connectDb();
-
-// app.use('./api', apiRoutes);
-
-// app.get('./',(req, res) => {
-//   res.send('Welcome to the Training Module ');
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => 
-//   console.log(`Server is running on port ${PORT}`));
 
