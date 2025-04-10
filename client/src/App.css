@@ -1,0 +1,327 @@
+
+/* General Styling */
+body {
+  background-color: #111;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Dashboard Css */
+
+.dashboard-container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  
+}
+
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between; /* Keep this for correct spacing when both buttons are present */
+  margin-top: 20px;
+  width: 100%;
+}
+
+.nav-button {
+  background-color: #f4f6f9;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button .icon-left {
+  margin-right: 10px;
+}
+
+.nav-button .icon-right {
+  margin-left: 10px;
+}
+
+
+.nav-button:hover {
+  background-color: #e0e5ea;
+  transform: translateY(-2px);
+}
+
+.prev-button {
+  margin-right: auto;
+  
+  /* Pushes the previous button to the left */
+}
+
+.next-button,
+.finish-button {
+  margin-left: auto; /* Pushes the next/finish button to the right */
+}
+
+.finish-button {
+  background-color: #00b3b3;
+  color: white;
+  font-size: 1rem;
+}
+
+.finish-button:hover {
+  background-color: #008080;
+}
+
+
+/* Module CSS */
+
+
+.module-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  
+}
+
+.module-header h2 {
+  font-size: 30px;
+  color: #f2f2f2;
+  align-items: center;
+  padding-left: 70px;
+  padding-top: 100px;
+  
+}
+
+
+
+.progress-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  width: 150px;
+  height: 150px;
+  
+}
+
+.progress-indicator p {
+  font-size: 20px;
+  color: #00b3b3;
+}
+.module-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+  align-items: stretch; /* Ensure both divs stretch to the same height */
+  margin: 25px 50px;
+}
+
+.module-description,
+.module-video {
+  flex: 1;
+  background-color: #111;
+  padding: 15px;
+  border-radius: 8px;
+  height: auto; /* Allow both divs to auto-adjust their height */
+  width: auto;
+  box-sizing: border-box; /* Ensure padding is included in the height/width */
+}
+
+.module-description {
+  max-width: 100%; /* Ensures it doesn't exceed the container */
+}
+
+.module-description p {
+  font-size: 30px;
+  color: #a6a6a6;
+  margin-bottom: 10px;
+}
+
+.module-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+}
+
+.module-video video {
+  width: 100%; /* Adjust the video to fill the container width */
+  height: 100%; /* Adjust the video to fill the container height */
+  border-radius: 8px;
+}
+
+
+
+
+
+/*Start & End CSS */
+.introduction-container, .congratulations-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #a6a6a6;
+  text-align: left;
+  
+}
+
+.introduction-container h1{
+  color: #fff;
+  font-size: 40px;
+}
+
+.introduction-container p, .congratulations-container p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  width: 800px;
+  justify-content: left;
+}
+
+.introduction-container button{
+  margin-top: 50px;
+}
+
+
+.congratulations-container h1{
+ color: #fff;
+}
+
+.congratulations-container p{
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.start-button, .restart-button {
+  background-color: #00b3b3;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.start-button:hover, .restart-button:hover {
+  background-color: #008080;
+}
+
+
+
+/* Responsive Styling */
+
+/* Tablets (min-width: 768px and max-width: 1024px) */
+@media (max-width: 1024px) {
+  .module-header h2 {
+    font-size: 30px;
+    padding-left: 40px;
+    padding-top: 25px;
+  }
+
+  .progress-indicator {
+    width: 120px;
+    height: 120px;
+  }
+
+  .progress-indicator p {
+    font-size: 16px;
+  }
+
+  .module-content {
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px;
+  }
+
+  .module-description p {
+    font-size: 24px;
+    width: 95%;
+  }
+
+  .module-video {
+    width: 95%;
+  }
+
+  .navigation-buttons {
+    flex-direction: row; /* Change to row to align buttons horizontally */
+  justify-content: space-between; /* Ensure correct spacing */
+
+  }
+
+  .nav-button {
+    width: 35%; 
+    font-size: 13px;
+    font-weight: 500;
+  }  
+  
+}
+
+/* Mobile (max-width: 767px) */
+@media (max-width: 767px) {
+  .module-header h2 {
+    font-size: 20px;
+    padding-left: 30px;
+    padding-top: 30px;
+  }
+
+  .progress-indicator {
+    width: 100px;
+    height: 100px;
+  }
+
+  .progress-indicator p {
+    font-size: 14px;
+  }
+
+  .module-content {
+    margin: 15px;
+  }
+
+  .module-description p {
+    font-size: 16px;
+    width: 70%;
+  }
+
+  .module-video {
+    width: 70%;
+  }
+
+  .navigation-buttons {
+    flex-direction: row; /* Change to row to align buttons horizontally */
+  justify-content: space-between; /* Ensure correct spacing */
+
+  }
+
+  .nav-button {
+    width: 35%; 
+    font-size: 13px;
+    font-weight: 500;
+  }  
+
+  .introduction-container p,
+  .congratulations-container p {
+    width: 90%;
+    font-size: 16px;
+  }
+
+  .introduction-container h1,
+  .congratulations-container p{
+    font-size: 25px;
+  }
+
+  .start-button, .restart-button {
+    width: 30%;
+    font-size: 1rem;
+  }
+}
