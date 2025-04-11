@@ -11,8 +11,9 @@ const app = express();
 
 // Middleware setup
 app.use(cors({
-  origin: ['https://frontend-62766463836.us-central1.run.app', 'http://localhost:3000'],
-  credentials: true
+  origin: process.env.FRONTEND_URL || '', // Fallback to allow all origins if FRONTEND_URL is not set
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
 app.use(express.json());
 
