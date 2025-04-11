@@ -25,15 +25,35 @@ const Dashboard = () => {
   // Fetches the list of video modules from the server when the component mounts.
   
 
+  // useEffect(() => {
+  //   // Define the API URL based on the environment
+  //   const apiUrl = process.env.NODE_ENV === 'development'
+  //     ? 'http://localhost:5000' // URL for local development server
+  //     : process.env.REACT_APP_API_URL; // URL for live server
+  
+  //   // Fetch videos from the API
+  //   fetch(`${apiUrl}/api/videos`)
+  //     .then(res => res.json())
+  //     .then(data => setVideos(data))
+  //     .catch(err => console.error('Error fetching videos:', err));
+  // }, []);
+
   useEffect(() => {
     // Define the API URL based on the environment
     const apiUrl = process.env.NODE_ENV === 'development'
       ? 'http://localhost:5000' // URL for local development server
-      : process.env.REACT_APP_API_URL; // URL for live server
-  
+      : process.env.REACT_APP_API_URL; // URL for production backend
+      
+    console.log('Using API URL:', apiUrl); // Debug log
+      
     // Fetch videos from the API
     fetch(`${apiUrl}/api/videos`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => setVideos(data))
       .catch(err => console.error('Error fetching videos:', err));
   }, []);
