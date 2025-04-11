@@ -25,52 +25,19 @@ const Dashboard = () => {
   // Fetches the list of video modules from the server when the component mounts.
   
 
-  // useEffect(() => {
-  //   // Define the API URL based on the environment
-  //   const apiUrl = process.env.NODE_ENV === 'development'
-  //     ? 'http://localhost:5000' // URL for local development server
-  //     : process.env.REACT_APP_API_URL; // URL for live server
-  
-  //   // Fetch videos from the API
-  //   fetch(`${apiUrl}/api/videos`)
-  //     .then(res => res.json())
-  //     .then(data => setVideos(data))
-  //     .catch(err => console.error('Error fetching videos:', err));
-  // }, []);
-
-  
   useEffect(() => {
     // Define the API URL based on the environment
     const apiUrl = process.env.NODE_ENV === 'development'
       ? 'http://localhost:5000' // URL for local development server
       : process.env.REACT_APP_API_URL; // URL for live server
-    
-    console.log("Attempting to fetch from:", `${apiUrl}/api/videos`);
-    
+  
+    // Fetch videos from the API
     fetch(`${apiUrl}/api/videos`)
-      .then(res => {
-        console.log("Response status:", res.status);
-        console.log("Content-Type:", res.headers.get('content-type'));
-        
-        // If the response isn't JSON, log the text for debugging
-        if (!res.headers.get('content-type')?.includes('application/json')) {
-          res.text().then(text => {
-            console.error("Non-JSON response:", text.substring(0, 200) + "...");
-            throw new Error("Received non-JSON response");
-          });
-          return null;
-        }
-        
-        return res.json();
-      })
-      .then(data => {
-        if (data) {
-          console.log("Received data:", data);
-          setVideos(data);
-        }
-      })
+      .then(res => res.json())
+      .then(data => setVideos(data))
       .catch(err => console.error('Error fetching videos:', err));
   }, []);
+
   
     //Handles navigation to the next module.If the current module is not the last one, it moves to the next module.If it is the last module, it navigates to the "Congratulations" page.
 
