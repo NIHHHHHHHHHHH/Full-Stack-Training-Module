@@ -5,31 +5,57 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// First try the client/build path (common in monorepo setups)
-let buildPath = path.join(__dirname, 'client', 'build');
-
-// If that doesn't exist, try the build directory in the current folder
+// Determine the build path - in Cloud Run, the files should be in the same directory
+let buildPath = path.join(__dirname, 'build');
 if (!fs.existsSync(buildPath)) {
-  buildPath = path.join(__dirname, 'build');
+  buildPath = path.join(__dirname, 'client', 'build');
+}
+if (!fs.existsSync(buildPath)) {
+  buildPath = path.join(__dirname, 'public');
 }
 
-// Debugging information
-console.log('Frontend server starting...');
-console.log('Current directory:', __dirname);
-console.log('Using build path:', buildPath);
-console.log('Build path exists:', fs.existsSync(buildPath));
+// Debug logging
+console.log('Server starting with:', {
+  nodeEnv: process.env.NODE_ENV,
+  currentDir: __dirname,
+  buildPath: buildPath,
+  buildExists: fs.existsSync(buildPath)
+});
 
 if (fs.existsSync(buildPath)) {
-  console.log('Files in build directory:', fs.readdirSync(buildPath));
+  try {
+    console.log('Files in build directory:', fs.readdirSync(buildPath));
+    // Also check for static directory
+    const staticDir = path.join(buildPath, 'static');
+    if (fs.existsSync(staticDir)) {
+      console.log('static directory exists with:', fs.readdirSync(staticDir));
+    }
+  } catch (err) {
+    console.error('Error listing build directory:', err);
+  }
 }
 
-// Serve static files with proper MIME types
+// Disable caching for development
+if (process.env.NODE_ENV !== 'production') {
+  app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
+}
+
+// Serve static files with explicit content types
 app.use(express.static(buildPath, {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.js')) {
-      res.setHeader('Content-Type', 'application/javascript');
+      res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
     } else if (filePath.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
+      res.setHeader('Content-Type', 'text/css; charset=UTF-8');
+    } else if (filePath.endsWith('.json')) {
+      res.setHeader('Content-Type', 'application/json; charset=UTF-8');
+    }
+    // Force no caching during development
+    if (process.env.NODE_ENV !== 'production') {
+      res.setHeader('Cache-Control', 'no-store');
     }
   }
 }));
@@ -39,13 +65,19 @@ app.get('/health', (req, res) => {
   res.send('Frontend is alive 🚀');
 });
 
-// API env check
-app.get('/api/check-env', (req, res) => {
+// API env check with more diagnostic info
+app.get('/api/debug', (req, res) => {
   res.json({
     environment: process.env.NODE_ENV || 'not set',
     isProduction: process.env.NODE_ENV === 'production',
     buildPath: buildPath,
-    buildExists: fs.existsSync(buildPath)
+    buildExists: fs.existsSync(buildPath),
+    directories: fs.existsSync(buildPath) ? 
+      fs.readdirSync(buildPath, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name) : [],
+    staticJsFiles: fs.existsSync(path.join(buildPath, 'static', 'js')) ? 
+      fs.readdirSync(path.join(buildPath, 'static', 'js')) : 'js dir not found'
   });
 });
 
@@ -58,7 +90,6 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Frontend server running on port ${PORT}`);
 });
-
 
 // const express = require('express');
 // const path = require('path');
