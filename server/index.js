@@ -2,6 +2,7 @@
 // Importing required modules
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config();
 const apiRoutes = require('./routes/api');
 const progressRoutes = require('./routes/progressRoutes');
 const connectDB = require('./config/db');
