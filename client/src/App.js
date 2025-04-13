@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Introduction />} />
 
         {/* Route for the Dashboard page */}
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         {/* Route for the congratulations page */}
         <Route path="/congratulations" element={<Congratulation />} />

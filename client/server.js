@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 // Log the environment when server starts
 console.log('Frontend running in environment:', process.env.NODE_ENV);
