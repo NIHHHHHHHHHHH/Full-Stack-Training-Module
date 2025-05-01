@@ -28,7 +28,7 @@ const Introduction = () => {
         Throughout this course, you'll learn about the importance of PPE in preventing workplace injuries, the correct way to use and maintain fire extinguishers, and key measures to avoid common hazards like slippery floors and cluttered walkways.
       </p>
       <p>
-        By the end of this training, you’ll be equipped with the knowledge to maintain a safe and secure working environment.
+      By the end of this training, you’ll have the knowledge and skills to ensure a safe and secure work environment.
       </p>
       
       {/* Button to start the training */}
