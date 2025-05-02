@@ -22,7 +22,7 @@ const Introduction = () => {
       
       {/* Description of the training content */}
       <p>
-        This training will cover essential topics to ensure your safety in the workplace, including the proper use of Personal Protective Equipment (PPE), fire safety and prevention, and how to prevent slips, trips, and falls.
+      This training covers key workplace safety topics, including the correct use of Personal Protective Equipment (PPE), fire safety and prevention, and strategies to prevent slips, trips, and falls.
       </p>
       <p>
         Throughout this course, you'll learn about the importance of PPE in preventing workplace injuries, the correct way to use and maintain fire extinguishers, and key measures to avoid common hazards like slippery floors and cluttered walkways.
