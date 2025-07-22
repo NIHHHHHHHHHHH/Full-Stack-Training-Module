@@ -4,5 +4,7 @@
 
 
 # Ignore environment variables
-server/.env
-client/.env
+server/.env.development
+client/.env.development
+server/.env.production
+client/.env.production
