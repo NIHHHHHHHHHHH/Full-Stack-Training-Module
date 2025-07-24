@@ -1,0 +1,54 @@
+# TRAINING-MODULE/client/cloudbuild.yaml
+# This Cloud Build configuration is now specific to your frontend service,
+# and resides within the 'client/' directory.
+
+steps:
+# Step 1: Build the Docker image for your frontend React app.
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'build'
+    - '-t'
+    # Image tag: The service name 'frontend' is explicitly included here.
+    # This ensures consistent naming for your frontend images.
+    - >-
+      $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/frontend:$COMMIT_SHA
+    # Build context: './' now refers to the 'client/' directory itself,
+    # as this cloudbuild.yaml file is within 'client/'.
+    - './'
+    # Dockerfile path: 'Dockerfile' is now relative to the build context ('./client/').
+    - '-f'
+    - 'Dockerfile'
+    - '--build-arg=REACT_APP_API_URL=${_REACT_APP_API_URL}'
+  id: Build
+
+# Step 2: Push the built Docker image to Google Artifact Registry.
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+    - 'push'
+    - >-
+      $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/frontend:$COMMIT_SHA
+  id: Push
+
+# Step 3: Deploy the new image to your Cloud Run service.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+  entrypoint: gcloud
+  args:
+    - 'run'
+    - 'deploy'
+    - 'frontend' # Your Cloud Run service name (ensure this matches)
+    - '--image'
+    - >-
+      $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/frontend:$COMMIT_SHA
+    - '--region=asia-south1' # Your Cloud Run service region
+    - '--platform=managed'
+    - '--allow-unauthenticated'
+    - '--quiet'
+    - >-
+      --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID
+  id: Deploy
+
+substitutions:
+  _REACT_APP_API_URL: 'https://backend-136209257100.asia-south1.run.app' # Default value
+
+images:
+- '$_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/frontend:$COMMIT_SHA'
