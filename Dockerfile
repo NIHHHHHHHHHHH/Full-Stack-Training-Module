@@ -37,7 +37,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Install gettext-runtime for envsubst
-RUN apk add --no-cache gettext-runtime
+RUN apk update && apk add --no-cache gettext
 
 # Remove default Nginx config
 RUN rm /etc/nginx/conf.d/default.conf
