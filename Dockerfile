@@ -6,7 +6,17 @@ COPY client/package*.json ./
 RUN npm install
 # Now, React app source is in client/ so specify the path
 COPY client/. .
+
+# Accept build arguments and set as environment variables
+ARG REACT_APP_API_URL
+ARG REACT_APP_OTHER_VAR
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ENV REACT_APP_OTHER_VAR=$REACT_APP_OTHER_VAR
+
+
 RUN npm run build
+
+
 
 # Stage 2: Serve the React application with Nginx
 FROM nginx:alpine
