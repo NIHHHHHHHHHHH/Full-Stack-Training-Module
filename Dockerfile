@@ -48,8 +48,8 @@ COPY client/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # Copy the built React app from the build-stage
 COPY --from=build-stage /app/build /usr/share/nginx/html
 
-# Copy the env-config.js.template (from client/public)
-COPY client/public/env-config.js.template /usr/share/nginx/html/env-config.js.template
+# Copy the env-config.js (from client/public)
+COPY client/public/env-config.js /usr/share/nginx/html/env-config.js
 
 # Copy the custom entrypoint script and make it executable
 COPY entrypoint.sh /docker-entrypoint.sh
