@@ -5,11 +5,13 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 
 # Declare the build argument for REACT_APP_API_URL
-# This allows you to pass a value to it during the docker build command
+# This is how Cloud Build will pass the value from its substitution variable
+# We're naming it REACT_APP_API_URL here for direct use below
 ARG REACT_APP_API_URL
 
 # Set the environment variable inside the container for Create React App
 # This makes process.env.REACT_APP_API_URL available during npm run build
+# The value is taken from the ARG passed in (which comes from Cloud Build's substitution)
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
 # Copy package.json and package-lock.json from the client directory
