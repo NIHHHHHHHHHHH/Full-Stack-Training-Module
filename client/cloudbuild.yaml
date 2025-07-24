@@ -1,21 +1,26 @@
 # TRAINING-MODULE/client/cloudbuild.yaml
-# This Cloud Build configuration is now specific to your frontend service,
-# and resides within the 'client/' directory.
 
 steps:
+# NEW DIAGNOSTIC STEP: Confirm _REACT_APP_API_URL value in Cloud Build
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim' # Or any builder with 'bash'
+  entrypoint: bash
+  args:
+    - '-c'
+    - |
+      echo "--- Cloud Build Debug: _REACT_APP_API_URL ---"
+      echo "Value from substitution variable: '${_REACT_APP_API_URL}'"
+      echo "--- End Debug ---"
+  id: debug-api-url-variable
+
 # Step 1: Build the Docker image for your frontend React app.
 - name: 'gcr.io/cloud-builders/docker'
   args:
     - 'build'
+    - '--no-cache' # <--- ADD THIS LINE BACK IN
     - '-t'
-    # Image tag: The service name 'frontend' is explicitly included here.
-    # This ensures consistent naming for your frontend images.
     - >-
       $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/frontend:$COMMIT_SHA
-    # Build context: './' now refers to the 'client/' directory itself,
-    # as this cloudbuild.yaml file is within 'client/'.
     - './'
-    # Dockerfile path: 'Dockerfile' is now relative to the build context ('./client/').
     - '-f'
     - 'Dockerfile'
     - '--build-arg=REACT_APP_API_URL=${_REACT_APP_API_URL}'
