@@ -14,7 +14,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const apiUrl = window.env.REACT_APP_API_URL;
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     axios.get(`${apiUrl}/api/videos`)
       .then(response => {

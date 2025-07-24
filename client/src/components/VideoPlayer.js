@@ -36,7 +36,7 @@ const VideoPlayer = ({ video, watchedTime, setWatchedTime, setIsVideoCompleted }
             console.error('Video.js Player Error:', error);
           });
 
-          const apiUrl = window.env.REACT_APP_API_URL;
+          const apiUrl = process.env.REACT_APP_API_URL;
 
           axios.get(`${apiUrl}/api/progress/${userId}/${video._id}`)
             .then(response => {
@@ -77,7 +77,7 @@ const VideoPlayer = ({ video, watchedTime, setWatchedTime, setIsVideoCompleted }
     } else {
       setWatchedTime(videoPlayer.currentTime());
 
-      const apiUrl = window.env.REACT_APP_API_URL;
+      const apiUrl = process.env.REACT_APP_API_URL;
 
       axios.post(`${apiUrl}/api/progress`, {
         userId: userId,

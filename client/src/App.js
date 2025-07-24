@@ -10,9 +10,9 @@ function App() {
 
   // Add debugging at the top of your App component
   console.log('=== FRONTEND ENVIRONMENT DEBUG ===');
-  console.log('Environment:', window.env.NODE_ENV);
-  console.log('Backend URL:', window.env.REACT_APP_API_URL);
-  console.log('All env vars:', Object.keys(window.env));
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('Backend URL:', process.env.REACT_APP_API_URL);
+  console.log('All env vars:', Object.keys(process.env));
   console.log('================================');
 
   return (
