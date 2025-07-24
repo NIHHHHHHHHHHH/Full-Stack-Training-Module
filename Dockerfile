@@ -1,4 +1,3 @@
-
 # Dockerfile (at the root of TRAINING-MODULE/)
 
 # Stage 1: Build the React application
